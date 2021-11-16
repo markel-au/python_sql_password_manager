@@ -15,7 +15,7 @@ def main():
     
     master_password_input = getpass.getpass("Master Password: ").encode()
 
-    second_FA_location = "Dee Boo Dah".encode()
+    second_FA_location = "".encode()
 
     master_password_hash = hashlib.sha256(master_password_input + second_FA_location).hexdigest()
 
