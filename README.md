@@ -30,7 +30,7 @@ Run main.py with all files inside the same directory.
 
 main.py [ARGUMENT] [OPTIONS}
 
-Example to add Password: main.py -a https://cybercademy.org gcollins
+Example to add Password: main.py -a https://cybercademy.org msamuel
 
 Enter the one of the following paramters:
 
