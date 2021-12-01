@@ -66,3 +66,6 @@ Enter the one of the following paramters:
 -uuname or --update_username [URL] [NEW_USERNAME]: Update username of stored URL.
 
 -upasswd or --update_password [URL] [NEW_PASSWORD]: Update new password by stored URL.
+
+
+Credit and inspiration for this project: https://github.com/KalleHallden/pwManager
