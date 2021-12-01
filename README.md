@@ -1,4 +1,3 @@
-# python_sql_password_manager
 Python-SQL CLI Password Manager
 Overview
 A Password Manager to securely manage and store passwords with URL, username, and passwords fields. A Master Password is used to authenticate into the manager "Vault", where all other passwords are stored.
