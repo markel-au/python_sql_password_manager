@@ -1,12 +1,13 @@
 import password_generator
-import sql_statements
+import sql_statements as sql
 import db_connect 
 import psycopg2
 import argparse
 import master_password
 import getpass
 import sys
-import hashlib 
+import hashlib
+
 
 def main():
     
@@ -51,13 +52,13 @@ def main():
         username = args.add[1]
         password = password_generator.password_gen(20)
         password_official = master_password.encrypt_password(password, master_password_hash)
-        cursor.execute(insert_db_row(), (URL, username, password_official))
+        cursor.execute(sql.insert_db_row(), (URL, username, password_official))
         print("Record Added:" + "\n URL: {0}, Username: {1}, Password: {2} (Plaintext Password)".format(URL, username, password))
         print("Record Added:" + "\n URL: {0}, Username: {1}, Password: {2} (Encrypted Ciphertext to be Stored)".format(URL, username, password_official))
 
     if args.query:
         URL = args.query[0]
-        cursor.execute(select_db_entry(), (URL, ))
+        cursor.execute(sql.select_db_entry(), (URL, ))
         record = cursor.fetchone()
         password_field = record[2]
         decrypt_password = master_password.decrypt_password(password_field, master_password_hash)
@@ -70,7 +71,7 @@ def main():
 
     if args.delete:
         URL = args.delete[0]
-        sql_delete_query = """Delete from Vault where URL = %s"""
+        sql_delete_query = """Delete from postgrs where URL = %s"""
         cursor.execute(sql_delete_query, (URL, ))
 
     if args.add_password:
@@ -78,27 +79,27 @@ def main():
         username = args.add_password[1]
         password = args.add_password[2]
         password_official = master_password.encrypt_password(password, master_password_hash)
-        cursor.execute(insert_db_row(), (URL, username, password_official))
+        cursor.execute(sql.insert_db_row(), (URL, username, password_official))
         print("Record added with custom password.")
 
     if args.update_url:
         new_URL = args.update_url[0]
         old_URL = args.update_url[1]
-        cursor.execute(update_db_url(), (new_URL, old_URL, ))
+        cursor.execute(sql.update_db_url(), (new_URL, old_URL, ))
 
     if args.update_username:
         new_username = args.update_username[0]
         URL = args.update_username[1]
-        cursor.execute(update_db_usrname(), (new_username, URL ))
+        cursor.execute(sql.update_db_usrname(), (new_username, URL ))
 
     if args.update_password:
         print("Please type in old password: ")
         new_password = args.update_password[0]
         URL = args.update_password[1]
-        cursor.execute(update_db_passwd(), (new_password, URL ))
+        cursor.execute(sql.update_db_passwd(), (new_password, URL ))
 
     if args.list:
-        cursor.execute("SELECT * from Vault")
+        cursor.execute("SELECT * from postgresql")
         record = cursor.fetchall()  
         for i in range(len(record)):
             entry = record[i]
